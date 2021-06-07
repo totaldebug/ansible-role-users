@@ -1,0 +1,20 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  roles:
+    - role: ansible-role-users
+
+  vars:
+    groups_to_create:
+      - name: developers
+        gid: 2002
+    users:
+      - username: terry
+        name: Terry Chocolate
+        groups: ['sudo','developers']
+        uid: 1001
+        home: /local/home/terry
+        profile: |
+          alias ll='ls -lah'
