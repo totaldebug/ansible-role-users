@@ -106,7 +106,7 @@ Add a users variable containing the list of users to add. A good place to put th
 users:
   - username: terry
     name: Terry Chocolate
-    groups: ['sudo','systemd-journal']
+    groups: ['sudo', 'systemd-journal']
     uid: 1001
     home: /local/home/terry
     profile: |

@@ -13,7 +13,7 @@
     users:
       - username: terry
         name: Terry Chocolate
-        groups: ['sudo','developers']
+        groups: ['sudo', 'developers']
         uid: 1001
         home: /local/home/terry
         profile: |
