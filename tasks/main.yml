@@ -45,6 +45,7 @@
     path: "{{ item.home | default('/home/' + item.username) }}/{{ authorized_keys_file }}"
     exclusive: "{{ item.ssh_key_exclusive | default('yes' if users_ssh_key_exclusive else 'no') }}"
   with_items: "{{ users }}"
+  when: item.ssh_key is defined
   become: true
   tags: ["users", "configuration"]
 
