@@ -4,6 +4,7 @@
     name: "{{ item.name }}"
     gid: "{{ item.gid | default(omit) }}"
   with_items: "{{ groups_to_create }}"
+  become: true
   tags: ["users", "groups", "configuration"]
 
 - name: Per-user group creation
@@ -34,6 +35,7 @@
     update_password: "{{ item.update_password | default(omit) }}"
     expires: "{{ item.expires | default(omit) }}"
   with_items: "{{ users }}"
+  become: true
   tags: ["users", "configuration"]
 
 - name: SSH keys
@@ -43,6 +45,7 @@
     path: "{{ item.home | default('/home/' + item.username) }}/{{ authorized_keys_file }}"
     exclusive: "{{ item.ssh_key_exclusive | default('yes' if users_ssh_key_exclusive else 'no')}}"
   with_items: "{{users}}"
+  become: true
   tags: ["users", "configuration"]
 
 - name: Setup user profiles
@@ -54,6 +57,7 @@
     mode: 0644
     create: true
   when: users_create_homedirs and item.profile is defined
+  become: true
   with_items: "{{ users }}"
 
 - name: Deleted user removal
@@ -63,6 +67,7 @@
     remove: "{{ item.remove | default(omit) }}"
     force: "{{ item.force | default(omit) }}"
   with_items: "{{ users_deleted }}"
+  become: true
   tags: ["users", "configuration"]
 
 - name: Deleted per-user group removal
@@ -70,5 +75,6 @@
     name: "{{ item.username }}"
     state: absent
   with_items: "{{ users_deleted }}"
+  become: true
   when: users_create_per_user_group
   tags: ["users", "configuration"]
