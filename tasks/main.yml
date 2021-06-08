@@ -29,7 +29,7 @@
     comment: "{{ item.name if item.name is defined else '' }}"
     uid: "{{ item.uid | default(omit) }}"
     home: "{{ item.home | default('/home/' + item.username) }}"
-    create_home: "{{ item.create_home | default('yes' if users_create_homedirs else 'no') }}"
+    create_home: "{{ item.create_home | default('true' if users_create_homedirs else 'false') }}"
     system: "{{ item.system | default(omit) }}"
     generate_ssh_key: "{{ item.generate_ssh_key | default(omit) }}"
     update_password: "{{ item.update_password | default(omit) }}"
@@ -43,7 +43,7 @@
     user: "{{ item.username }}"
     key: "{{ item.ssh_key | join('\n') }}"
     path: "{{ item.home | default('/home/' + item.username) }}/{{ authorized_keys_file }}"
-    exclusive: "{{ item.ssh_key_exclusive | default('yes' if users_ssh_key_exclusive else 'no') }}"
+    exclusive: "{{ item.ssh_key_exclusive | default('true' if users_ssh_key_exclusive else 'false') }}"
   with_items: "{{ users }}"
   when: item.ssh_key is defined
   become: true

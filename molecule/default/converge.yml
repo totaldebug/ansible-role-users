@@ -20,4 +20,3 @@
           alias ll='ls -lah'
         ssh-key:
           - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQCg0fA+1yrgqttYSQo7BVnjpCqwSD/ITwWMbDKsK3pPvRMvpjSWYZvxKHtknsuQQuSwzJ9C/bcG1wPhYrOLLkXgKmvOk5oINCgJJyH2XifBQEbmFZQbQuxrvvo5ZZpXqjP0WZFvpNekJEw7CnJIdgauyOPSPbr2SRB+5ejzpUVn3Q=="
-

@@ -77,10 +77,10 @@ Add a users variable containing the list of users to add. A good place to put th
 | `expires` |  | Optional expiry time for the user in epoch, it will be ignored on platforms that do not support this. You can remove the expiry time by specifying a negative value. Currently supported on GNU/Linux and FreeBSD. |
 | `group` | | Optional primary group override. |
 | `groups` | `[]`| A list of supplementary groups for the user. |
-| `append` | `no` | If yes, will only add groups, not set them to just the list in groups (optional). |
+| `append` | `false` | If true, will only add groups, not set them to just the list in groups (optional). |
 | `profile` | | A string block for setting custom shell profiles. |
 | `ssh_key` | | This should be a list of SSH keys for the user (optional). Each SSH key should be included directly and should have no newlines.
-| `generate_ssh_key` | `no` | Whether to generate a SSH key for the user (optional). |
+| `generate_ssh_key` | `false` | Whether to generate a SSH key for the user (optional). |
 | `shell` | `/bin/bash` | The user's shell. This defaults to /bin/bash. The default is configurable using the users_default_shell variable if you want to give all users the same shell, but it is different than /bin/bash. |
 | `system` | `false` | Allows creation of system users. |
 | `ssh_key_exclusive` | `users_ssh_key_exclusive` | Whether to remove all other non-specified keys from the authorized_keys file. |
