@@ -32,7 +32,7 @@
     create_home: "{{ item.create_home | default('true' if users_create_homedirs else 'false') }}"
     system: "{{ item.system | default(omit) }}"
     generate_ssh_key: "{{ item.generate_ssh_key | default(omit) }}"
-    update_password: "{{ item.update_password | default(omit) }}"
+    update_password: "{{ item.update_password if item.update_password is defined else always }}"
     expires: "{{ item.expires | default(omit) }}"
   with_items: "{{ users }}"
   become: true
