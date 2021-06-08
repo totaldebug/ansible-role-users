@@ -43,8 +43,8 @@
     user: "{{ item.username }}"
     key: "{{ item.ssh_key | join('\n') }}"
     path: "{{ item.home | default('/home/' + item.username) }}/{{ authorized_keys_file }}"
-    exclusive: "{{ item.ssh_key_exclusive | default('yes' if users_ssh_key_exclusive else 'no')}}"
-  with_items: "{{users}}"
+    exclusive: "{{ item.ssh_key_exclusive | default('yes' if users_ssh_key_exclusive else 'no') }}"
+  with_items: "{{ users }}"
   become: true
   tags: ["users", "configuration"]
 
