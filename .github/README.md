@@ -85,6 +85,13 @@ Add a users variable containing the list of users to add. A good place to put th
 | `system` | `false` | Allows creation of system users. |
 | `ssh_key_exclusive` | `users_ssh_key_exclusive` | Whether to remove all other non-specified keys from the authorized_keys file. |
 
+To create a passowrd hash:
+
+```shell
+sudo apt inatll whois
+mkpasswd --method=SHA-512
+```
+
 #### Group Creation
 
 | **Input** | **Default** | **Description** |
