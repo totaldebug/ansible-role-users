@@ -18,9 +18,10 @@
   tags: ["users", "configuration"]
 
 - name: Check that user exists
-  shell: "grep {{item.username}} /etc/passwd"
+  shell: "grep {{ item.username }} /etc/passwd"
   ignore_errors: yes
   register: userexist
+  changed_when: false
   with_items: "{{ users }}"
 
 - name: User creation
