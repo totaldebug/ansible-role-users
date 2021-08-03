@@ -17,12 +17,18 @@
   become: true
   tags: ["users", "configuration"]
 
-- name: Check that user exists
-  command: "grep {{ item.username }} /etc/passwd"
-  ignore_errors: yes
-  register: userexist
-  changed_when: false
-  with_items: "{{ users }}"
+
+- name: set fact when user exists
+  set_fact:
+    user_exists: true
+  when: "{{ item.username }} in item.key"
+  loop: "{{ ansible_facts.getent_passwd | dict2items }}"
+
+- name: set fact when user does not exists
+  set_fact:
+    user_exists: false
+  when: "{{ item.username }} not in item.key"
+  loop: "{{ ansible_facts.getent_passwd | dict2items }}"
 
 - name: User creation
   ansible.builtin.user:
@@ -43,7 +49,8 @@
     update_password: "{{ item.update_password | default('always') }}"
     expires: "{{ item.expires | default(omit) }}"
   with_items: "{{ users }}"
-  when: userexist.results | selectattr('item','defined') | map(attribute='item') | list | selectattr('username','equalto',item.username) | length == 0
+  when:
+    - not user_exists
   changed_when: false
   become: true
   tags: ["users", "configuration"]
