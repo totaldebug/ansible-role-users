@@ -70,9 +70,7 @@ Add a users variable containing the list of users to add. A good place to put th
 | `uid ` | | The numeric user id for the user (optional). This is required for uid consistency across systems. |
 | `gid` | | The numeric group id for the group (optional). |
 | `password` | | If a hash is provided then that will be used, but otherwise the account will be locked. |
-| `update_password` | `always` | This can be either 'always' or 'on_create'
-                                  'always' will update passwords if they differ.
-                                  'on_create' will only set the password for newly created users. |
+| `update_password` | `always` | This can be either 'always' or 'on_create'<br>'always' will update passwords if they differ.<br>'on_create' will only set the password for newly created users. |
 | `password_lock` | `false` | allows locking users password. |
 | `expires` |  | Optional expiry time for the user in epoch, it will be ignored on platforms that do not support this. You can remove the expiry time by specifying a negative value. Currently supported on GNU/Linux and FreeBSD. |
 | `group` | | Optional primary group override. |
