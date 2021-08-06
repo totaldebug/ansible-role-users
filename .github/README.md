@@ -71,8 +71,8 @@ Add a users variable containing the list of users to add. A good place to put th
 | `gid` | | The numeric group id for the group (optional). |
 | `password` | | If a hash is provided then that will be used, but otherwise the account will be locked. |
 | `update_password` | `always` | This can be either 'always' or 'on_create'
-'always' will update passwords if they differ.
-'on_create' will only set the password for newly created users. |
+                                  'always' will update passwords if they differ.
+                                  'on_create' will only set the password for newly created users. |
 | `password_lock` | `false` | allows locking users password. |
 | `expires` |  | Optional expiry time for the user in epoch, it will be ignored on platforms that do not support this. You can remove the expiry time by specifying a negative value. Currently supported on GNU/Linux and FreeBSD. |
 | `group` | | Optional primary group override. |
@@ -85,7 +85,7 @@ Add a users variable containing the list of users to add. A good place to put th
 | `system` | `false` | Allows creation of system users. |
 | `ssh_key_exclusive` | `users_ssh_key_exclusive` | Whether to remove all other non-specified keys from the authorized_keys file. |
 
-To create a passowrd hash:
+To create a password hash:
 
 ```shell
 sudo apt inatll whois
@@ -126,6 +126,30 @@ groups_to_create:
     gid: 2002
 users_deleted:
   - username: Orange
+```
+
+### Example different users for different devices
+
+If you require a main user on all devices and different users on different devices,
+this can be achieved as follows:
+
+in group_vars/all
+```yaml
+_default_users:
+  - username: mainaccount
+    uid: 2000
+    groups: ['sudo']
+    ssh-key: mypublic ssh key"
+
+users: "{{ _default_users + (_specific_users | default([])) }}"
+```
+
+in group_vars/server
+```yaml
+_specific_users:
+  - username: serviceaccount
+    uid: 666
+    system: true
 ```
 
 ## Features

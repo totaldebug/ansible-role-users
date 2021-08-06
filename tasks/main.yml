@@ -17,7 +17,8 @@
   become: true
   tags: ["users", "configuration"]
 
-- getent:
+- name: Get all users from device
+  getent:
     database: passwd
     key:
   tags: ["users", "configuration"]
