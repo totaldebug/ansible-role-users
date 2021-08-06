@@ -17,18 +17,25 @@
   become: true
   tags: ["users", "configuration"]
 
+- name: Get all users from device
+  getent:
+    database: passwd
+    key:
+  tags: ["users", "configuration"]
 
 - name: set fact when user exists
   set_fact:
     user_exists: true
-  when: "{{ item.username }} in item.key"
-  loop: "{{ ansible_facts.getent_passwd | dict2items }}"
+  when: item.username in ansible_facts.getent_passwd
+  with_items: "{{ users }}"
+  tags: ["users", "configuration"]
 
 - name: set fact when user does not exists
   set_fact:
     user_exists: false
-  when: "{{ item.username }} not in item.key"
-  loop: "{{ ansible_facts.getent_passwd | dict2items }}"
+  when: item.username not in ansible_facts.getent_passwd
+  with_items: "{{ users }}"
+  tags: ["users", "configuration"]
 
 - name: User creation
   ansible.builtin.user:
@@ -46,13 +53,20 @@
     create_home: "{{ item.create_home | default('true' if users_create_homedirs else 'false') }}"
     system: "{{ item.system | default(omit) }}"
     generate_ssh_key: "{{ item.generate_ssh_key | default(omit) }}"
-    update_password: "{{ item.update_password | default('always') }}"
     expires: "{{ item.expires | default(omit) }}"
   with_items: "{{ users }}"
   when:
     - not user_exists
   changed_when: false
   become: true
+  tags: ["users", "configuration"]
+
+- name: Update Passwords
+  ansible.builtin.user:
+    name: "{{ item.username }}"
+    update_password: "{{ item.update_password }}"
+  when: item.update_password is defined
+  with_items: "{{ users }}"
   tags: ["users", "configuration"]
 
 - name: SSH keys
